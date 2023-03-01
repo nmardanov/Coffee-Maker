@@ -1,0 +1,17 @@
+{
+	"pump_1": {
+		"name": "Pump 1",
+		"pin": 17, 
+		"value": "Milk"
+	},
+	"pump_2": {
+		"name": "Pump 2",
+		"pin": 27, 
+		"value": "Cream"
+	},
+	"pump_3": {
+		"name": "Pump 3",
+		"pin": 22, 
+		"value": "Water"
+	}
+}
