@@ -3,11 +3,17 @@
 import imaplib
 import email
 from email.header import decode_header
+from itertools import chain
 import webbrowser
 import os
-import sys
+import time
+import re
 
-sys.path.insert(0, r'C:\Users\s1657228\source\repos\Gmail API')
+#TODO:
+#Loop only checks newest email every 30 seconds. If 2 are sent within that window, one is ignored. Fix this.
+#Parse text to connect to pump script
+#Send texts with drink list to users, or to confirm that orders are received
+
 
 # account credentials
 username = "robobarista@outlook.com"
@@ -17,89 +23,83 @@ password = "Coffee1!"
 # for office 365, it's this:
 imap_server = "outlook.office365.com"
 
-def clean(text):
-    # clean text for creating a folder
-    return "".join(c if c.isalnum() else "_" for c in text)
-
 # create an IMAP4 class with SSL
 imap = imaplib.IMAP4_SSL(imap_server)
 # authenticate
 imap.login(username, password)
 
 status, messages = imap.select("INBOX")
-# number of top emails to fetch
-N = 1
 # total number of emails
 messages = int(messages[0])
+rem = messages
 
-for i in range(messages, messages-N, -1):
-    # fetch the email message by ID
-    res, msg = imap.fetch(str(i), "(RFC822)")
-    for response in msg:
-        if isinstance(response, tuple):
-            # parse a bytes email into a message object
-            msg = email.message_from_bytes(response[1])
-            # decode the email subject
-            try:
-                subject, encoding = decode_header(msg["Subject"])[0]
-                if isinstance(subject, bytes):
-                    # if it's a bytes, decode to str
-                    subject = subject.decode(encoding)
-            except:
-                print('No header')
-            # decode email sender
-            From, encoding = decode_header(msg.get("From"))[0]
-            if isinstance(From, bytes):
-                From = From.decode(encoding)
-            #print("Subject:", subject)
-            print("From:", From)
-            # if the email message is multipart
-            if msg.is_multipart():
-                # iterate over email parts
-                for part in msg.walk():
-                    # extract content type of email
-                    content_type = part.get_content_type()
-                    content_disposition = str(part.get("Content-Disposition"))
-                    try:
-                        # get the email body
-                        body = part.get_payload(decode=True).decode()
-                    except:
-                        pass
-                    if content_type == "text/plain" and "attachment" not in content_disposition:
-                        # print text/plain emails and skip attachments
-                        print(body)
-                    elif "attachment" in content_disposition:
-                        # download attachment
-                        filename = part.get_filename()
-                        if filename:
-                            folder_name = clean(subject)
-                            if not os.path.isdir(folder_name):
-                                # make a folder for this email (named after the subject)
-                                os.mkdir(folder_name)
-                            filepath = os.path.join(folder_name, filename)
-                            # download attachment and save it
-                            open(filepath, "wb").write(part.get_payload(decode=True))
-            else:
-                # extract content type of email
-                content_type = msg.get_content_type()
-                # get the email body
-                body = msg.get_payload(decode=True).decode()
-                if content_type == "text/plain":
-                    # print only text email parts
-                    print(body)
-            if content_type == "text/html":
-                # if it's HTML, create a new HTML file and open it in browser
-                folder_name = clean(subject)
-                if not os.path.isdir(folder_name):
-                    # make a folder for this email (named after the subject)
-                    os.mkdir(folder_name)
-                filename = "index.html"
-                filepath = os.path.join(folder_name, filename)
-                # write the file
-                open(filepath, "w").write(body)
-                # open in the default browser
-                webbrowser.open(filepath)
-            print("="*100)
+
+
+#Extracts the text from the .txt file sent to the email
+def get_contents(pmsg):
+    if not pmsg.is_multipart():
+        pass
+    for part in pmsg.walk():
+        # extract content type of email
+        content_type = part.get_content_type()
+        content_disposition = str(part.get("Content-Disposition"))
+        try:
+            # get the email body
+            body = part.get_payload(decode=True).decode()
+        except:
+            pass
+        if content_type == "text/plain" and "attachment" not in content_disposition:
+            # print text/plain emails and skip attachments, will print here for T-Mobile, but not for AT&T
+            return body
+        elif "attachment" in content_disposition:
+            # print attachment contents, will print here for AT&T. Assumes that file is a .txt, because we should only be receiving texts
+            filename = part.get_filename()
+            if filename:
+                f = open(filename, 'r')
+                file_contents = f.read()
+
+                return file_contents
+    return "No text contents found"
+
+
+
+
+#Main loop
+while 1:
+    #Have to login each loop to refresh the inbox. Redefine messages to see if any new ones are available.
+    imap = imaplib.IMAP4_SSL(imap_server)
+    imap.login(username, password)
+    status, messages = imap.select("INBOX")
+    messages = int(messages[0])
+
+    #If there are new messages, read the contents of the newest message
+    if messages != rem:
+        res, msg = imap.fetch(str(messages), "(RFC822)") 
+        for response in msg:
+            if isinstance(response, tuple):
+                # parse a bytes email into a message object
+                msg = email.message_from_bytes(response[1])
+                # decode the email subject    
+                print(get_contents(msg))
+        rem = messages
+
+    print("Made it to end of while loop!")
+    time.sleep(30)
+    
+
+
+"""
+res, msg = imap.fetch(str(messages), "(RFC822)") 
+for response in msg:
+    if isinstance(response, tuple):
+        # parse a bytes email into a message object
+        msg = email.message_from_bytes(response[1])
+        # decode the email subject    
+        print(get_contents(msg))
+"""
+
+
+
 # close the connection and logout
 imap.close()
 imap.logout()
