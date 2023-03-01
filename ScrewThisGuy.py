@@ -152,7 +152,6 @@ class Bartender(MenuDelegate):
 
 bartender = Bartender()
 
-#My best guess as to what making a drink would look like
 
 #SomethingNasty = {'Milk' : 1, 'Water' : 1}
 #bartender.makeDrink(SomethingNasty)
