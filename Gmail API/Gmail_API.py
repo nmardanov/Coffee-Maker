@@ -33,7 +33,11 @@ status, messages = imap.select("INBOX")
 messages = int(messages[0])
 rem = messages
 
-
+def save_attachment(part):
+    filename = part.get_filename()
+    if filename:
+        with open(filename, 'wb') as f:
+            f.write(part.get_payload(decode=True))
 
 #Extracts the text from the .txt file sent to the email
 def get_contents(pmsg):
@@ -55,9 +59,10 @@ def get_contents(pmsg):
             # print attachment contents, will print here for AT&T. Assumes that file is a .txt, because we should only be receiving texts
             filename = part.get_filename()
             if filename:
+                save_attachment(part)
                 f = open(filename, 'r')
                 file_contents = f.read()
-
+                
                 return file_contents
     return "No text contents found"
 
