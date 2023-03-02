@@ -7,11 +7,11 @@
 	"pump_2": {
 		"name": "Pump 2",
 		"pin": 27, 
-		"value": "Cream"
+		"value": "Half"
 	},
 	"pump_3": {
 		"name": "Pump 3",
 		"pin": 22, 
-		"value": "Water"
+		"value": "Coffee"
 	}
 }

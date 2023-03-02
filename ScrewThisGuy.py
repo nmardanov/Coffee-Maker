@@ -8,7 +8,7 @@ import traceback
 from menu import MenuItem, Menu, Back, MenuContext, MenuDelegate
 from drinks import drink_list, drink_options
 
-sys.path.insert(0, r'C:\Users\s1657228\source\repos\Gmail API')
+
 
 GPIO.setmode(GPIO.BCM)
 
@@ -34,7 +34,7 @@ class Bartender(MenuDelegate):
 
 
     def clean(self):
-        waitTime = 20
+        waitTime = 60
         pumpThreads = []
 
         # cancel any button presses while the drink is being made
@@ -50,14 +50,14 @@ class Bartender(MenuDelegate):
             thread.start()
 
         # start the progress bar
-        self.progressBar(waitTime)
+        #self.progressBar(waitTime)
 
         # wait for threads to finish
         for thread in pumpThreads:
             thread.join()
 
         # show the main menu
-        self.menuContext.showMenu()
+        #self.menuContext.showMenu()
 
         # sleep for a couple seconds to make sure the interrupts don't get triggered
         time.sleep(2)
@@ -145,25 +145,33 @@ class Bartender(MenuDelegate):
     def ChooseDrink(self, drinkName):
         for drink in self.possibleDrinks:
             if drink['name'] == drinkName:
+                print(drink['ingredients'])
                 return drink['ingredients']
 
 
 
 bartender = Bartender()
 
-#My best guess as to what making a drink would look like
 
-SomethingNasty = {'Milk' : 1, 'Water' : 1}
-bartender.makeDrink(SomethingNasty)
+#SomethingNasty = {'Milk' : 1, 'Water' : 1}
+#bartender.makeDrink(SomethingNasty)
+#time.sleep(2)
 
+d = []
+for drink in drink_list:
+      d.append(drink['name'])  
+print(d)
+print('Which drink are you making')
+#test2 = input()
 #If that works test this
-#test2 = bartender.ChooseDrink('Hot Water')
+#test2 = bartender.ChooseDrink(test2)
+#print(test2)
 #bartender.makeDrink(test2)
 
 #If that works we just need to connect up the text API
 
 #If we want to clean the pumps attach water to them and run this code
-#bartender.clean()
+bartender.clean()
 
 #WTF Does this code do?
 #bartender.buildMenu(drink_list, drink_options)

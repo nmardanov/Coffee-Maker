@@ -89,7 +89,7 @@ while 1:
 
 
 """
-res, msg = imap.fetch(str(messages), "(RFC822)") 
+res, msg = imap.fetch(str(messages) , "(RFC822)") 
 for response in msg:
     if isinstance(response, tuple):
         # parse a bytes email into a message object

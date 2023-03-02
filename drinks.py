@@ -1,43 +1,63 @@
 drink_list = [
 	{
-		"name": "Black",
+		"name": "Latte",
 		"ingredients": {
-			"coffee": 200
+			#"Half":80,
+			"Coffee":160,
+			"Milk": 50
+		}
+	}, {
+		"name": "Black",
+		"ingredients": {     
+			"Water": 20
+		}
+	}, {
+		"name": "Hot Cocoa",
+		"ingredients": {
+			"Cocoa": 20,
+			"Milk": 40
 		}
 	}, {
 		"name": "Americano",
 		"ingredients": {
-			"coffee": 100,
-			"water": 100
+			"Half": 40,
+			"Coffee": 20
 		}
 	}, {
-		"name": "Espresso",
+		"name": "Mocha",
 		"ingredients": {
-			"coffee": 50,
-			"milk": 50
+			"Coffee": 20,
+			"Milk": 20
 		}
 	}, {
-		"name": "Doppio",
+		"name": "Alomond",
 		"ingredients": {
-			"coffee": 100,
-			"milk": 50
-		}
-	}, {
-		"name": "Bitch Made",
-		"ingredients": {
-			"coffee": 50,
-			"milk": 100
-		}
-	}, {
-		"name": "Just Milk",
-		"ingredients": {
-			"milk": 100
+			"Milk": 120,
+			"Coffee": 200
 		}
 	}, {
 		"name": "Hot Water",
 		"ingredients": {
-			"water": 100
+			"Water": 40
 		}
+	}, { "name": "Average Joe",
+		"ingredients": {
+			"Half": 40,
+			"Coffee": 250
+			}
+	},{ "name": "Stronger Almond",
+		"ingredients": {
+			"Milk": 20,
+			"Coffee": 60
+			}
+			
+	},{"name": "Half half and Half",
+		"ingredients":{
+		"Milk": 50,
+		"Half": 50,
+		"Coffee": 50
+		}
+	
 	}
 ]
 
