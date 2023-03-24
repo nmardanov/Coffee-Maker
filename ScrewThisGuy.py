@@ -4,6 +4,8 @@ import RPi.GPIO as GPIO
 import json 
 import threading
 import traceback
+from GmailAPI import Gmail_API as g
+
 
 from menu import MenuItem, Menu, Back, MenuContext, MenuDelegate
 from drinks import drink_list, drink_options
@@ -162,6 +164,10 @@ for drink in drink_list:
       d.append(drink['name'])  
 print(d)
 print('Which drink are you making')
+
+
+
+
 #test2 = input()
 #If that works test this
 #test2 = bartender.ChooseDrink(test2)
@@ -171,7 +177,7 @@ print('Which drink are you making')
 #If that works we just need to connect up the text API
 
 #If we want to clean the pumps attach water to them and run this code
-bartender.clean()
+#bartender.clean()
 
 #WTF Does this code do?
 #bartender.buildMenu(drink_list, drink_options)

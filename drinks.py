@@ -12,7 +12,7 @@ drink_list = [
 			"Water": 20
 		}
 	}, {
-		"name": "Hot Cocoa",
+		"name": "Hot_Cocoa",
 		"ingredients": {
 			"Cocoa": 20,
 			"Milk": 40
@@ -36,22 +36,22 @@ drink_list = [
 			"Coffee": 200
 		}
 	}, {
-		"name": "Hot Water",
+		"name": "Hot_Water",
 		"ingredients": {
 			"Water": 40
 		}
-	}, { "name": "Average Joe",
+	}, { "name": "Average_Joe",
 		"ingredients": {
 			"Half": 40,
 			"Coffee": 250
 			}
-	},{ "name": "Stronger Almond",
+	},{ "name": "Stronger_Almond",
 		"ingredients": {
 			"Milk": 20,
 			"Coffee": 60
 			}
 			
-	},{"name": "Half half and Half",
+	},{"name": "Half_half_and_Half",
 		"ingredients":{
 		"Milk": 50,
 		"Half": 50,

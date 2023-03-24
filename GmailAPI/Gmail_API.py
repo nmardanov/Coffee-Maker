@@ -70,8 +70,15 @@ def get_contents(pmsg):
 
 
 #Main loop
-while 1:
-    #Have to login each loop to refresh the inbox. Redefine messages to see if any new ones are available.
+def checkMail():
+    username = "robobarista@outlook.com"
+    password = "Coffee1!"
+    imap_server = "outlook.office365.com"
+    imap = imaplib.IMAP4_SSL(imap_server)
+    imap.login(username, password)
+    status, messages = imap.select("INBOX")
+    messages = int(messages[0])
+    rem = messages
     imap = imaplib.IMAP4_SSL(imap_server)
     imap.login(username, password)
     status, messages = imap.select("INBOX")
@@ -85,11 +92,9 @@ while 1:
                 # parse a bytes email into a message object
                 msg = email.message_from_bytes(response[1])
                 # decode the email subject    
-                print(get_contents(msg))
+                return get_contents(msg)
         rem = messages
 
-    print("Made it to end of while loop!")
-    time.sleep(30)
     
 
 
