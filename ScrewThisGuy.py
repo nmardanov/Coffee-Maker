@@ -5,6 +5,7 @@ import json
 import threading
 import traceback
 from GmailAPI import Gmail_API as g
+import OrderParser as o
 
 
 from menu import MenuItem, Menu, Back, MenuContext, MenuDelegate
@@ -32,8 +33,8 @@ class Bartender(MenuDelegate):
 
     @staticmethod
     def readPumpConfiguration():
-        return json.load(open('pump_config.json'))
-
+        return json.load(open('Coffee-Maker\pump_config.json'))
+        
 
     def clean(self):
         waitTime = 60
@@ -150,7 +151,13 @@ class Bartender(MenuDelegate):
                 print(drink['ingredients'])
                 return drink['ingredients']
 
-
+def CheckForOrder():
+    ordered = True
+    while ordered == True:
+        order = g.checkMail()
+        if order:
+            o.CheckTextVaildity(order)
+            return order
 
 bartender = Bartender()
 
@@ -164,7 +171,9 @@ for drink in drink_list:
       d.append(drink['name'])  
 print(d)
 print('Which drink are you making')
-
+order = CheckForOrder()
+order = bartender.ChooseDrink(order)
+bartender.makeDrink(order)
 
 
 
