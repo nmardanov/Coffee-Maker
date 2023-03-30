@@ -6,6 +6,14 @@ import threading
 import traceback
 from GmailAPI import Gmail_API as g
 import OrderParser as o
+import imaplib
+import email
+from email.header import decode_header
+from itertools import chain
+import webbrowser
+import os
+import time
+import re
 
 
 from menu import MenuItem, Menu, Back, MenuContext, MenuDelegate
@@ -21,19 +29,25 @@ FLOW_RATE = 60.0/100.0
 class Bartender(MenuDelegate): 
 	
     def __init__(self):
+        print("Initializing...")
+
         self.possibleDrinks = drink_list
         self.running = False
         # load the pump configuration from file
         self.pump_configuration = Bartender.readPumpConfiguration()
         for pump in self.pump_configuration.keys():
             #Finding the pin numbers per pump and seting up the GPIO
-            GPIO.setup(self.pump_configuration[pump]["pin"], GPIO.OUT, initial=GPIO.HIGH)
+            if not self.pump_configuration[pump]['pin'] == 21:
+                GPIO.setup(self.pump_configuration[pump]["pin"], GPIO.OUT, initial=GPIO.HIGH)
+            else:    
+                GPIO.setup(self.pump_configuration[pump]["pin"], GPIO.OUT, initial=GPIO.LOW)
+            
 
         print("Done initializing")
 
     @staticmethod
     def readPumpConfiguration():
-        return json.load(open('Coffee-Maker\pump_config.json'))
+        return json.load(open('/home/lamarcsnhscoffee/Desktop/Coffee-MakerV.2/Coffee-Maker/pump_config.json'))
         
 
     def clean(self):
@@ -73,9 +87,14 @@ class Bartender(MenuDelegate):
         print(menuItem.name)
 
     def pour(self, pin, waitTime):
-        GPIO.output(pin, GPIO.LOW)
-        time.sleep(waitTime)
-        GPIO.output(pin, GPIO.HIGH)
+        if pin == 21:
+            GPIO.output(pin, GPIO.HIGH)
+            time.sleep(waitTime)
+            GPIO.output(pin, GPIO.LOW)
+        else:
+            GPIO.output(pin, GPIO.LOW)
+            time.sleep(waitTime)
+            GPIO.output(pin, GPIO.HIGH)
 
 
     def makeDrink(self, ingredients):
@@ -85,6 +104,9 @@ class Bartender(MenuDelegate):
         #ingredients is a dictionary where the keys are strings representing the names of the ingredients and the values are floats representing the amount of each ingredient required to make the drink.
         #For example a drink like half and half 50% coffee and 50% milk
         #Would have ingredients 'Coffee' : 50, 'Milk' :50
+
+        if ingredients == "ESC":
+            return "dumbass. enter a real drink"
 
         self.running = True
 
@@ -151,17 +173,19 @@ class Bartender(MenuDelegate):
                 print(drink['ingredients'])
                 return drink['ingredients']
 
-def CheckForOrder():
-    ordered = True
-    while ordered == True:
-        order = g.checkMail()
-        if order:
-            o.CheckTextVaildity(order)
-            return order
+
 
 bartender = Bartender()
 
-
+def CheckForOrder():
+    ordered = True
+    order = g.checkMail().lower()
+    if order:
+        order = o.CheckTextVaildity(order)
+        print(order)
+        return order
+    return 'ESC'
+    
 #SomethingNasty = {'Milk' : 1, 'Water' : 1}
 #bartender.makeDrink(SomethingNasty)
 #time.sleep(2)
@@ -170,9 +194,15 @@ d = []
 for drink in drink_list:
       d.append(drink['name'])  
 print(d)
+order = "Not on the menu"
 print('Which drink are you making')
-order = CheckForOrder()
+while order == "Not on the menu":
+    order = CheckForOrder()
+    print(f"Received order: {order}")
+    
+print(order)
 order = bartender.ChooseDrink(order)
+
 bartender.makeDrink(order)
 
 

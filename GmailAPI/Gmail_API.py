@@ -71,43 +71,30 @@ def get_contents(pmsg):
 
 #Main loop
 def checkMail():
-    username = "robobarista@outlook.com"
-    password = "Coffee1!"
-    imap_server = "outlook.office365.com"
     imap = imaplib.IMAP4_SSL(imap_server)
     imap.login(username, password)
     status, messages = imap.select("INBOX")
     messages = int(messages[0])
     rem = messages
-    imap = imaplib.IMAP4_SSL(imap_server)
-    imap.login(username, password)
-    status, messages = imap.select("INBOX")
-    messages = int(messages[0])
+#Have to login each loop to refresh the inbox. Redefine messages to see if any new ones are available.
+    while 1:
+        imap = imaplib.IMAP4_SSL(imap_server)
+        imap.login(username, password)
+        status, messages = imap.select("INBOX")
+        messages = int(messages[0])
+        #If there are new messages, read the contents of the newest message
+        if messages != rem:
+            res, msg = imap.fetch(str(messages), "(RFC822)") 
+            for response in msg:
+                if isinstance(response, tuple):
+                    # parse a bytes email into a message object
+                    msg = email.message_from_bytes(response[1])
+                    # decode the email subject    
+                    return(get_contents(msg))
+            rem = messages
 
-    #If there are new messages, read the contents of the newest message
-    if messages != rem:
-        res, msg = imap.fetch(str(messages), "(RFC822)") 
-        for response in msg:
-            if isinstance(response, tuple):
-                # parse a bytes email into a message object
-                msg = email.message_from_bytes(response[1])
-                # decode the email subject    
-                return get_contents(msg)
-        rem = messages
-
-    
-
-
-"""
-res, msg = imap.fetch(str(messages) , "(RFC822)") 
-for response in msg:
-    if isinstance(response, tuple):
-        # parse a bytes email into a message object
-        msg = email.message_from_bytes(response[1])
-        # decode the email subject    
-        print(get_contents(msg))
-"""
-
+        print("Looped")
+        time.sleep(10)
 
 
 # close the connection and logout
