@@ -9,7 +9,7 @@ drink_list = [
 	}, {
     	"name": "test",
 		"ingredients":{
-			"Milk": 50
+			"Almond": 50
 		}
 	}, {
     	"name": "black",
