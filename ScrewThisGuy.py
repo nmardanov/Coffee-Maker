@@ -6,14 +6,6 @@ import threading
 import traceback
 from GmailAPI import Gmail_API as g
 import OrderParser as o
-import imaplib
-import email
-from email.header import decode_header
-from itertools import chain
-import webbrowser
-import os
-import time
-import re
 
 
 from menu import MenuItem, Menu, Back, MenuContext, MenuDelegate
@@ -47,7 +39,7 @@ class Bartender(MenuDelegate):
 
     @staticmethod
     def readPumpConfiguration():
-        return json.load(open('/home/lamarcsnhscoffee/Desktop/Coffee-MakerV.2/Coffee-Maker/pump_config.json'))
+        return json.load(open('Coffee-Maker\pump_config.json'))
         
 
     def clean(self):
@@ -173,7 +165,14 @@ class Bartender(MenuDelegate):
                 print(drink['ingredients'])
                 return drink['ingredients']
 
+orders = []
 
+def orderThread():
+    o = CheckForOrder()
+    orders.append(o)
+
+gettingOrders = threading.Thread(target=orderThread())
+gettingOrders.start()
 
 bartender = Bartender()
 
@@ -186,6 +185,8 @@ def CheckForOrder():
         return order
     return 'ESC'
     
+
+
 #SomethingNasty = {'Milk' : 1, 'Water' : 1}
 #bartender.makeDrink(SomethingNasty)
 #time.sleep(2)
@@ -194,16 +195,16 @@ d = []
 for drink in drink_list:
       d.append(drink['name'])  
 print(d)
-order = "Not on the menu"
 print('Which drink are you making')
-while order == "Not on the menu":
-    order = CheckForOrder()
-    print(f"Received order: {order}")
-    
-print(order)
-order = bartender.ChooseDrink(order)
 
-bartender.makeDrink(order)
+while True:
+    print(orders)
+    if len(orders) > 0:
+        order = orders[0]
+        orders.pop(0)
+        order = bartender.ChooseDrink(order)
+        bartender.makeDrink(order)
+    time.sleep(1)
 
 
 
