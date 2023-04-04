@@ -39,7 +39,7 @@ class Bartender(MenuDelegate):
 
     @staticmethod
     def readPumpConfiguration():
-        return json.load(open('Coffee-Maker\pump_config.json'))
+        return json.load(open('/home/lamarcsnhscoffee/Desktop/Coffee-MakerV.2/Coffee-Maker/pump_config.json'))
         
 
     def clean(self):
@@ -167,14 +167,6 @@ class Bartender(MenuDelegate):
 
 orders = []
 
-def orderThread():
-    o = CheckForOrder()
-    orders.append(o)
-
-gettingOrders = threading.Thread(target=orderThread())
-gettingOrders.start()
-
-bartender = Bartender()
 
 def CheckForOrder():
     ordered = True
@@ -184,6 +176,18 @@ def CheckForOrder():
         print(order)
         return order
     return 'ESC'
+
+bartender = Bartender()
+
+
+def orderThread():
+    while True:
+        o = CheckForOrder()
+        orders.append(o)
+
+
+
+
     
 
 
@@ -197,6 +201,9 @@ for drink in drink_list:
 print(d)
 print('Which drink are you making')
 
+gettingOrders = threading.Thread(target=orderThread)
+gettingOrders.start()
+
 while True:
     print(orders)
     if len(orders) > 0:
@@ -206,6 +213,7 @@ while True:
         bartender.makeDrink(order)
     time.sleep(1)
 
+gettingOrders.join()
 
 
 #test2 = input()

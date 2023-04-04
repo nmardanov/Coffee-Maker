@@ -96,7 +96,6 @@ def checkMail():
         print("Looped")
         time.sleep(10)
 
-
 # close the connection and logout
 imap.close()
 imap.logout()

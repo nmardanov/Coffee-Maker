@@ -8,11 +8,12 @@ orders = []
 
 def CheckForOrder():
     ordered = True
-    while ordered == True:
-        order = g.checkMail()
-        if order:
-            o.CheckTextVaildity(order)
-            return order
+    order = g.checkMail().lower()
+    if order:
+        order = o.CheckTextVaildity(order)
+        print(order)
+        return order
+    return 'ESC'
 
 def threaded_function():
     print('hi')

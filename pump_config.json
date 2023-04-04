@@ -11,7 +11,7 @@
 	},
 	"pump_3": {
 		"name": "Pump 3",
-		"pin": 22, 
+		"pin": 22	, 
 		"value": "Water"
 	},
 	"pump_4": {
