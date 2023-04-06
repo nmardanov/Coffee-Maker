@@ -182,7 +182,7 @@ def CheckForOrder():
         print(order)
         return order
     else:
-        g.sendMail("Not a real drink", thing[1])
+        g.SendEmail(thing[1], None, "Not a real drink")
         print(thing[1])
         return CheckForOrder()
 

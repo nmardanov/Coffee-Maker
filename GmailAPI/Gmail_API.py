@@ -73,11 +73,11 @@ def get_contents(pmsg):
 def SendEmail(to, cc_mail, body, attachmentspath=None):
     creds = Credentials(
         #login information for where email is being sent from
-        username='lamarhstech@outlook.com',
-        password='DiyaIsAmazing!2023!'
+        username,
+        password
     )
     account = Account(
-        primary_smtp_address='lamarhstech@outlook.com',
+        primary_smtp_address=username,
         credentials=creds,
         autodiscover=True,
         access_type=DELEGATE
@@ -86,10 +86,11 @@ def SendEmail(to, cc_mail, body, attachmentspath=None):
     m = Message(
         account=account,
         cc_recipients=cc_mail,
-        subject='Information Regarding Your Student',
+        subject=None,
         body=HTMLBody(body),
         to_recipients=[Mailbox(email_address=to)]
     )
+    print(body)
     m.send()
 
 #Main loop
