@@ -9,14 +9,14 @@ drink_list = [
 	}, {
     	"name": "test",
 		"ingredients":{
-			"Almond": 50,
-            "Milk": 50
+			"Almond": 1,
+            "Milk": 1
             
 		}
 	}, {
     	"name": "black",
         "ingredients":{
-    		"Coffee":200
+    		"Coffee":10
 		}
 	}, {
 		"name": "cream",

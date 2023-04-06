@@ -173,12 +173,18 @@ orders = []
 
 def CheckForOrder():
     ordered = True
-    order = g.checkMail().lower()
-    if order:
-        order = o.CheckTextVaildity(order)
+    thing = g.checkMail()
+    order = thing[0].lower()
+    print(order)
+    order = o.CheckTextVaildity(order)
+    if not order == None:
+        print('This is the order')
         print(order)
         return order
-    return 'ESC'
+    else:
+        g.sendMail("Not a real drink", thing[1])
+        print(thing[1])
+        return CheckForOrder()
 
 bartender = Bartender()
 
@@ -186,6 +192,7 @@ bartender = Bartender()
 def orderThread():
     while True:
         o = CheckForOrder()
+        print(o)
         orders.append(o)
         print(orders)
 
@@ -199,8 +206,8 @@ def orderThread():
 #bartender.makeDrink(SomethingNasty)
 #time.sleep(2)
 
-print('How many drinks do we want to make')
-drinkLimit = input()
+#print('How many drinks do we want to make')
+#drinkLimit = input()
 
 d = []
 for drink in drink_list:
@@ -221,8 +228,8 @@ while True:
         order = bartender.ChooseDrink(order)
         bartender.makeDrink(order)
         drinkcount += 1
-    if drinkcount == drinkLimit:
-       break
+    #if drinkcount == drinkLimit:
+    #   break
     time.sleep(1)
 
 gettingOrders.join()

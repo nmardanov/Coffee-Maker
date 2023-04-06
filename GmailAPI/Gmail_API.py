@@ -8,7 +8,9 @@ import webbrowser
 import os
 import time
 import re
+from dotenv import load_dotenv
 
+load_dotenv()
 #TODO:
 #Loop only checks newest email every 30 seconds. If 2 are sent within that window, one is ignored. Fix this.
 #Parse text to connect to pump script
@@ -16,8 +18,8 @@ import re
 
 
 # account credentials
-username = "robobarista@outlook.com"
-password = "Coffee1!"
+username = os.environ.get("username")
+password = os.environ.get("password")
 # use your email provider's IMAP server, you can look for your provider's IMAP server on Google
 # or check this page: https://www.systoolsgroup.com/imap/
 # for office 365, it's this:
@@ -66,7 +68,8 @@ def get_contents(pmsg):
                 return file_contents
     return "No text contents found"
 
-
+def sendMail(message, email):
+    pass
 
 
 #Main loop
@@ -91,11 +94,12 @@ def checkMail():
                     msg = email.message_from_bytes(response[1])
                     # decode the email subject
                     print(msg['From'])
-                    return(get_contents(msg))
+                    return(get_contents(msg), msg['From'])
             rem = messages
 
         print("Looped")
-        time.sleep(10)
+        time.sleep(5)
+
 
 
 

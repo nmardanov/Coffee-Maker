@@ -34,5 +34,5 @@ def CheckTextVaildity(order):
    if matches:
            return value
    else:
-           return "Not on the menu"
+           return None
 
