@@ -52,6 +52,9 @@ class Bartender(MenuDelegate):
 
         for pump in self.pump_configuration.keys():
             pump_t = threading.Thread(target=self.pour, args=(self.pump_configuration[pump]["pin"], waitTime))
+
+            if self.pump_configuration[pump]["pin"]==21:
+                continue
             pumpThreads.append(pump_t)
 
         # start the pump threads
