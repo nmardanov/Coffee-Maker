@@ -184,6 +184,7 @@ def orderThread():
     while True:
         o = CheckForOrder()
         orders.append(o)
+        print(orders)
 
 
 
@@ -195,6 +196,9 @@ def orderThread():
 #bartender.makeDrink(SomethingNasty)
 #time.sleep(2)
 
+print('How many drinks do we want to make')
+drinkLimit = input()
+
 d = []
 for drink in drink_list:
       d.append(drink['name'])  
@@ -204,6 +208,8 @@ print('Which drink are you making')
 gettingOrders = threading.Thread(target=orderThread)
 gettingOrders.start()
 
+drinkcount = 0
+
 while True:
     print(orders)
     if len(orders) > 0:
@@ -211,6 +217,9 @@ while True:
         orders.pop(0)
         order = bartender.ChooseDrink(order)
         bartender.makeDrink(order)
+        drinkcount += 1
+    if drinkcount == drinkLimit:
+       break
     time.sleep(1)
 
 gettingOrders.join()
