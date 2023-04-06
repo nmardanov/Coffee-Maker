@@ -89,12 +89,15 @@ def checkMail():
                 if isinstance(response, tuple):
                     # parse a bytes email into a message object
                     msg = email.message_from_bytes(response[1])
-                    # decode the email subject    
+                    # decode the email subject
+                    print(msg['From'])
                     return(get_contents(msg))
             rem = messages
 
         print("Looped")
         time.sleep(10)
+
+
 
 # close the connection and logout
 imap.close()

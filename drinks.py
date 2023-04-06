@@ -3,18 +3,20 @@ drink_list = [
 		"name": "latte",
 		"ingredients": {
 			#"Half":80,
-			"Coffee":50,
+			"Coffee":250,
 			"Milk": 50
 		}
 	}, {
     	"name": "test",
 		"ingredients":{
-			"Almond": 50
+			"Almond": 50,
+            "Milk": 50
+            
 		}
 	}, {
     	"name": "black",
         "ingredients":{
-    		"Coffee":100
+    		"Coffee":200
 		}
 	}, {
 		"name": "cream",
