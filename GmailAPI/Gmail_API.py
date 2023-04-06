@@ -7,6 +7,7 @@ from itertools import chain
 import webbrowser
 import os
 import time
+from exchangelib import DELEGATE, Account, Credentials, Message, Mailbox, HTMLBody
 import re
 from dotenv import load_dotenv
 
