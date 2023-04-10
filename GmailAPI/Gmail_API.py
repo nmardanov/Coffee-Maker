@@ -9,9 +9,10 @@ import os
 import time
 from exchangelib import DELEGATE, Account, Credentials, Message, Mailbox, HTMLBody
 import re
-from dotenv import load_dotenv
+#from dotenv import load_dotenv
 
-load_dotenv()
+#load_dotenv()
+
 #TODO:
 #Loop only checks newest email every 30 seconds. If 2 are sent within that window, one is ignored. Fix this.
 #Parse text to connect to pump script
@@ -19,8 +20,11 @@ load_dotenv()
 
 
 # account credentials
-username = os.environ.get("username")
-password = os.environ.get("password")
+#username = os.environ.get("username")
+#password = os.environ.get("password")
+username = "robobarista@outlook.com"
+password = "Coffee1!"
+
 # use your email provider's IMAP server, you can look for your provider's IMAP server on Google
 # or check this page: https://www.systoolsgroup.com/imap/
 # for office 365, it's this:
@@ -73,8 +77,8 @@ def get_contents(pmsg):
 def SendEmail(to, cc_mail, body, attachmentspath=None):
     creds = Credentials(
         #login information for where email is being sent from
-        username,
-        password
+        username = "robobarista@outlook.com",
+        password = "Coffee1!"
     )
     account = Account(
         primary_smtp_address=username,
@@ -92,6 +96,8 @@ def SendEmail(to, cc_mail, body, attachmentspath=None):
     )
     print(body)
     m.send()
+
+
 
 #Main loop
 def checkMail():
@@ -120,7 +126,6 @@ def checkMail():
 
         print("Looped")
         time.sleep(5)
-
 
 
 

@@ -182,7 +182,11 @@ def CheckForOrder():
         print(order)
         return order
     else:
-        g.SendEmail(thing[1], None, "Not a real drink")
+        d = 'Please choose from one of these drinks: '
+        for drink in drink_list:
+            d += (drink['name'])  
+        print(d)
+        g.SendEmail(thing[1], None, d)
         print(thing[1])
         return CheckForOrder()
 
