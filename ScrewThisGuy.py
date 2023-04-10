@@ -185,6 +185,7 @@ def CheckForOrder():
         d = 'Please choose from one of these drinks: '
         for drink in drink_list:
             d += (drink['name'])  
+            d += ', '
         print(d)
         g.SendEmail(thing[1], None, d)
         print(thing[1])
