@@ -16,6 +16,7 @@ from drinks import drink_list, drink_options
 GPIO.setmode(GPIO.BCM)
 
 
+
 FLOW_RATE = 60.0/100.0
 
 class Bartender(MenuDelegate): 
@@ -192,7 +193,7 @@ def CheckForOrder():
         print(thing[1])
         return CheckForOrder()
 
-bartender = Bartender()
+
 
 
 def orderThread():
@@ -215,46 +216,49 @@ def orderThread():
 #print('How many drinks do we want to make')
 #drinkLimit = input()
 
-d = []
-for drink in drink_list:
-      d.append(drink['name'])  
-print(d)
-print('Which drink are you making')
+#TODO: add condition for clean to not check orders
+if __name__ == "__main__":
+    bartender = Bartender()
+    d = []
+    for drink in drink_list:
+        d.append(drink['name'])  
+    print(d)
+    print('Which drink are you making')
 
-gettingOrders = threading.Thread(target=orderThread)
-gettingOrders.start()
+    gettingOrders = threading.Thread(target=orderThread)
+    gettingOrders.start()
 
-drinkcount = 0
+    drinkcount = 0
 
-while True:
-    print(orders)
-    if len(orders) > 0:
-        order = orders[0]
-        orders.pop(0)
-        order = bartender.ChooseDrink(order)
-        bartender.makeDrink(order)
-        drinkcount += 1
-    #if drinkcount == drinkLimit:
-    #   break
-    time.sleep(1)
+    while True:
+        print(orders)
+        if len(orders) > 0:
+            order = orders[0]
+            orders.pop(0)
+            order = bartender.ChooseDrink(order)
+            bartender.makeDrink(order)
+            drinkcount += 1
+        #if drinkcount == drinkLimit:
+        #   break
+        time.sleep(1)
 
-gettingOrders.join()
+    gettingOrders.join()
 
 
-#test2 = input()
-#If that works test this
-#test2 = bartender.ChooseDrink(test2)
-#print(test2)
-#bartender.makeDrink(test2)
+    #test2 = input()
+    #If that works test this
+    #test2 = bartender.ChooseDrink(test2)
+    #print(test2)
+    #bartender.makeDrink(test2)
 
-#If that works we just need to connect up the text API
+    #If that works we just need to connect up the text API
 
-#If we want to clean the pumps attach water to them and run this code
-#bartender.clean()
+    #If we want to clean the pumps attach water to them and run this code
+    #bartender.clean()
 
-#WTF Does this code do?
-#bartender.buildMenu(drink_list, drink_options)
-#bartender.run()
+    #WTF Does this code do?
+    #bartender.buildMenu(drink_list, drink_options)
+    #bartender.run()
 
 
 
