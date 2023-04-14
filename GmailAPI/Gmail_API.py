@@ -23,7 +23,7 @@ import re
 # account credentials
 #username = os.environ.get("username")
 #password = os.environ.get("password")
-username = "robobarista@outlook.com"
+username = "lhsrobobarista@outlook.com"
 password = "Coffee1!"
 
 # use your email provider's IMAP server, you can look for your provider's IMAP server on Google
@@ -78,7 +78,7 @@ def get_contents(pmsg):
 def SendEmail(to, cc_mail, body, attachmentspath=None):
     creds = Credentials(
         #login information for where email is being sent from
-        username = "robobarista@outlook.com",
+        username = "lhsrobobarista@outlook.com",
         password = "Coffee1!"
     )
     account = Account(

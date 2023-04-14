@@ -206,9 +206,6 @@ def orderThread():
 
 
 
-    
-
-
 #SomethingNasty = {'Milk' : 1, 'Water' : 1}
 #bartender.makeDrink(SomethingNasty)
 #time.sleep(2)
@@ -219,6 +216,7 @@ def orderThread():
 #TODO: add condition for clean to not check orders
 if __name__ == "__main__":
     bartender = Bartender()
+    #bartender.clean()
     d = []
     for drink in drink_list:
         d.append(drink['name'])  
