@@ -10,9 +10,17 @@ import time
 from exchangelib import DELEGATE, Account, Credentials, Message, Mailbox, HTMLBody
 import re
 
-#from dotenv import load_dotenv
+#twilio set up as backup
+from twilio.rest import Client
+from dotenv import load_dotenv
 
-#load_dotenv()
+load_dotenv()
+twilio_account_sid = os.environ.get("TWILIO_ACCOUNT_SID")
+twilio_auth_token = os.environ.get("TWILIO_AUTH_TOKEN")
+twilio_phone_number= os.environ.get("TWILIO_PHONE_NUMBER")
+
+
+
 
 #TODO:
 #Loop only checks newest email every 30 seconds. If 2 are sent within that window, one is ignored. Fix this.
@@ -74,29 +82,45 @@ def get_contents(pmsg):
                 return file_contents
     return "No text contents found"
 
+def send_sms_twilio(to, body):
+    client = Client(twilio_account_sid, twilio_auth_token)
+    message = client.messages.create(
+        body=body + '\nPlease do not reply to this number',
+        from_=twilio_phone_number,
+        to=to
+    )
+    print("Message sent to", to)
+
 
 def SendEmail(to, cc_mail, body, attachmentspath=None):
-    creds = Credentials(
-        #login information for where email is being sent from
-        username = "lhsrobobarista@outlook.com",
-        password = "Coffee1!"
-    )
-    account = Account(
-        primary_smtp_address=username,
-        credentials=creds,
-        autodiscover=True,
-        access_type=DELEGATE
-    )
+    # Check if the email address is for a T-Mobile or Verizon number
+    if "@tmomail.net" in to or "@vtext.com" in to:
+        # Extract the phone number from the email address
+        phone_number = re.sub(r"@.*", "", to)
+        # Send the SMS using Twilio
+        send_sms_twilio(phone_number, body)
+    else:
+        creds = Credentials(
+            # login information for where the email is being sent from
+            username="lhsrobobarista@outlook.com",
+            password="Coffee1!"
+        )
+        account = Account(
+            primary_smtp_address=username,
+            credentials=creds,
+            autodiscover=True,
+            access_type=DELEGATE
+        )
 
-    m = Message(
-        account=account,
-        cc_recipients=cc_mail,
-        subject=None,
-        body=HTMLBody(body),
-        to_recipients=[Mailbox(email_address=to)]
-    )
-    print(body)
-    m.send()
+        m = Message(
+            account=account,
+            cc_recipients=cc_mail,
+            subject=None,
+            body=HTMLBody(body),
+            to_recipients=[Mailbox(email_address=to)]
+        )
+        print(body)
+        m.send()
 
 
 
@@ -122,12 +146,12 @@ def checkMail():
                     msg = email.message_from_bytes(response[1])
                     # decode the email subject
                     print(msg['From'])
+                    
                     return(get_contents(msg), msg['From'])
             rem = messages
 
         print("Looped")
         time.sleep(5)
-
 
 
 # close the connection and logout
