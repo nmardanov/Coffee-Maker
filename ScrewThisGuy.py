@@ -216,7 +216,7 @@ def orderThread():
 #TODO: add condition for clean to not check orders
 if __name__ == "__main__":
     bartender = Bartender()
-    #bartender.clean()
+   # bartender.clean()
     d = []
     for drink in drink_list:
         d.append(drink['name'])  
