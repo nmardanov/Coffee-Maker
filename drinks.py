@@ -32,7 +32,6 @@ drink_options = [
 	{"name": "Americano", "value": "americano"},
 	{"name": "Espresso", "value": "espresso"},
 	{"name": "Doppio", "value": "doppio"},
-	{"name": "Bitch Made", "value": "bm"},
 	{"name": "Just Milk", "value": "jm"},
 	{"name": "Hot Water", "value": "hw"}
 ]

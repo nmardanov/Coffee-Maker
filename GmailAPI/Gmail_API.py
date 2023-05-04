@@ -29,10 +29,9 @@ twilio_phone_number= os.environ.get("TWILIO_PHONE_NUMBER")
 
 
 # account credentials
-#username = os.environ.get("username")
-#password = os.environ.get("password")
-username = "lhsrobobarista@outlook.com"
-password = "Coffee1!"
+username = os.environ.get("username")
+password = os.environ.get("password")
+
 
 # use your email provider's IMAP server, you can look for your provider's IMAP server on Google
 # or check this page: https://www.systoolsgroup.com/imap/
