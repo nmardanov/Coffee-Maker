@@ -6,11 +6,13 @@ import threading
 import traceback
 from GmailAPI import Gmail_API as g
 import OrderParser as o
+import grounds
+import Arm
 
 
 from menu import MenuItem, Menu, Back, MenuContext, MenuDelegate
 from drinks import drink_list, drink_options
-
+max_stages = 3
 
 
 GPIO.setmode(GPIO.BCM)
@@ -93,7 +95,7 @@ class Bartender(MenuDelegate):
             GPIO.output(pin, GPIO.HIGH)
 
 
-    def makeDrink(self, ingredients):
+    def makeDrink(self, ingredients, stage):
         # cancel any button presses while the drink is being made
         # self.stopInterrupts()
         #The drink parameter is a string that represents the name of the drink being made 
@@ -111,7 +113,7 @@ class Bartender(MenuDelegate):
         #This loop goes though each ingredient 
         for ing in ingredients.keys():
             #This loop looks though each pump in the pump config to see if there is one that matches the label of the ingredent we are attempting to add
-            for pump in self.pump_configuration.keys():
+            for pump in self.pump_configuration.keys(): 
                 if ing == self.pump_configuration[pump]["value"]:
                     #This finds how long we should pour the drink for
                     waitTime = ingredients[ing] * FLOW_RATE
@@ -121,8 +123,11 @@ class Bartender(MenuDelegate):
                     #So this opens a thread which goes to the pour method for each ingredient
                     #THE THREADS HAVENT STARTED YET
                     #Then it adds them to a list of not started threads 
-                    pump_t = threading.Thread(target=self.pour, args=(self.pump_configuration[pump]["pin"], waitTime))
-                    pumpThreads.append(pump_t)
+                    #This is statement checks if the arm is in the correct place
+                    if stage == self.pump_configuration[pump]["stage"]:
+                        pump_t = threading.Thread(target=self.pour, args=(self.pump_configuration[pump]["pin"], waitTime))
+                        pumpThreads.append(pump_t)
+                        print('We have made a thread')
 
         # start the pump threads
         for thread in pumpThreads:
@@ -231,10 +236,19 @@ if __name__ == "__main__":
     while True:
         print(orders)
         if len(orders) > 0:
+            stage = 1     
             order = orders[0]
             orders.pop(0)
             order = bartender.ChooseDrink(order)
-            bartender.makeDrink(order)
+            grounds.Pump_Grounds()
+            #for stage in range(max_stages):
+            for stage in range(4):
+                bartender.makeDrink(order, stage)
+                Arm.rotate()
+                
+                
+
+
             drinkcount += 1
         #if drinkcount == drinkLimit:
         #   break

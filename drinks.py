@@ -2,7 +2,7 @@ drink_list = [
 	{
 		"name": "latte",
 		"ingredients": {
-			#"Half":80,
+			"Froth":80,
 			"Coffee":200,
 			"Milk": 100
 		}

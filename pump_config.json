@@ -2,21 +2,32 @@
 	"pump_1": {
 		"name": "Pump 1",
 		"pin": 17, 
-		"value": "Milk"
+		"value": "Milk",
+		"stage": 1
 	},
 	"pump_2": {
 		"name": "Pump 2",
 		"pin": 27, 
-		"value": "Almond"
+		"value": "Almond",
+		"stage": 1
+
 	},
 	"pump_3": {
 		"name": "Pump 3",
 		"pin": 22	, 
-		"value": "Water"
+		"value": "Water",
+		"stage": 1
 	},
 	"pump_4": {
 		"name": "Pump 4",
 		"pin": 21,
-		"value": "Coffee"
+		"value": "Coffee",
+		"stage": 3
+	},
+	"Frother": {
+		"name": "Frother",
+		"pin": 23,
+		"value": "Froth",
+		"stage": 2
 	}
 }
