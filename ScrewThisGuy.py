@@ -8,6 +8,7 @@ from GmailAPI import Gmail_API as g
 import OrderParser as o
 import grounds
 import Arm
+import Pully
 
 
 from menu import MenuItem, Menu, Back, MenuContext, MenuDelegate
@@ -89,10 +90,16 @@ class Bartender(MenuDelegate):
             GPIO.output(pin, GPIO.HIGH)
             time.sleep(waitTime)
             GPIO.output(pin, GPIO.LOW)
-        else:
+        if not pin == 23:
             GPIO.output(pin, GPIO.LOW)
             time.sleep(waitTime)
             GPIO.output(pin, GPIO.HIGH)
+        if pin == 23:
+            Pully.down()
+            GPIO.output(pin, GPIO.LOW)
+            time.sleep(waitTime)
+            GPIO.output(pin, GPIO.HIGH)
+            Pully.up()
 
 
     def makeDrink(self, ingredients, stage):
@@ -245,6 +252,7 @@ if __name__ == "__main__":
             for stage in range(4):
                 bartender.makeDrink(order, stage)
                 Arm.rotate()
+            Arm.reset()
                 
                 
 
