@@ -15,4 +15,3 @@ def Pump_Grounds():
     GPIO.output(pin,GPIO.HIGH)
     print("OFF")
 
-Pump_Grounds()

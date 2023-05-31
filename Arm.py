@@ -27,5 +27,4 @@ def reset():
     time.sleep(1.3)
     GPIO.output(pin,GPIO.LOW)
 
-rotate()
-reset()
+
