@@ -9,8 +9,8 @@ drink_list = [
 	}, {
     	"name": "test",
 		"ingredients":{
-			"Almond": 30,
-            "Milk": 30
+			"Coffee": 5,
+            "Froth": 5
             
 		}
 	}, {
@@ -22,6 +22,7 @@ drink_list = [
 		"name": "al latte",
         "ingredients":{
 			"Coffee": 200,
+            "Froth":80,
             "Almond": 250
 		} 
 	}

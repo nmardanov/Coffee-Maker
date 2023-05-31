@@ -31,7 +31,7 @@ class Bartender(MenuDelegate):
         self.running = False
         # load the pump configuration from file
         self.pump_configuration = Bartender.readPumpConfiguration()
-        GPIO.setup(6, GPIO.OUT, initial=GPIO.LOW)
+        GPIO.setup(6, GPIO.OUT, initial=GPIO.HIGH)
         for pump in self.pump_configuration.keys():
             #Finding the pin numbers per pump and seting up the GPIO
             if not self.pump_configuration[pump]['pin'] == 21:
@@ -91,16 +91,17 @@ class Bartender(MenuDelegate):
             GPIO.output(pin, GPIO.HIGH)
             time.sleep(waitTime)
             GPIO.output(pin, GPIO.LOW)
-        if not pin == 23:
-            GPIO.output(pin, GPIO.LOW)
-            time.sleep(waitTime)
-            GPIO.output(pin, GPIO.HIGH)
-        if pin == 23:
-            Pully.down()
-            GPIO.output(pin, GPIO.LOW)
-            time.sleep(waitTime)
-            GPIO.output(pin, GPIO.HIGH)
-            Pully.up()
+        else:
+            if not pin == 23:
+                GPIO.output(pin, GPIO.LOW)
+                time.sleep(waitTime)
+                GPIO.output(pin, GPIO.HIGH)
+            if pin == 23:
+                Pully.down()
+                GPIO.output(pin, GPIO.LOW)
+                time.sleep(waitTime)
+                GPIO.output(pin, GPIO.HIGH)
+                Pully.up()
 
 
     def makeDrink(self, ingredients, stage):
@@ -250,9 +251,11 @@ if __name__ == "__main__":
             order = bartender.ChooseDrink(order)
             grounds.Pump_Grounds()
             #for stage in range(max_stages):
-            for stage in range(3):
+            for stage in range(1,4):
                 bartender.makeDrink(order, stage)
-                Arm.rotate()
+                if not stage == 4:
+                    Arm.rotate()
+                print("stage " + str(stage))
             Arm.reset()
                 
                 
