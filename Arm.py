@@ -15,7 +15,7 @@ def rotate():
     GPIO.setwarnings(False)
     GPIO.setup(pin,GPIO.OUT)
     GPIO.output(pin,GPIO.HIGH)
-    time.sleep(.65)
+    time.sleep(.565)
     GPIO.output(pin,GPIO.LOW)
 
 def reset():
@@ -24,7 +24,5 @@ def reset():
     GPIO.setwarnings(False)
     GPIO.setup(pin,GPIO.OUT)
     GPIO.output(pin,GPIO.HIGH)
-    time.sleep(1.3)
+    time.sleep(2*.565)
     GPIO.output(pin,GPIO.LOW)
-
-
