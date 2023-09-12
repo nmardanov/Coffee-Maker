@@ -4,7 +4,7 @@ drink_list = [
 		"ingredients": {
 			"Froth":80,
 			"Coffee":200,
-			"Milk": 100
+			"Milk": 60
 		}
 	}, {
     	"name": "test",
@@ -23,7 +23,7 @@ drink_list = [
         "ingredients":{
 			"Coffee": 200,
             "Froth":80,
-            "Almond": 250
+            "Almond": 60
 		} 
 	}
 ]

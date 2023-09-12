@@ -58,7 +58,7 @@ class Bartender(MenuDelegate):
         for pump in self.pump_configuration.keys():
             pump_t = threading.Thread(target=self.pour, args=(self.pump_configuration[pump]["pin"], waitTime))
 
-            if self.pump_configuration[pump]["pin"]==21:
+            if self.pump_configuration[pump]["pin"]==21 or self.pump_configuration[pump]["pin"]==23:
                 continue
             pumpThreads.append(pump_t)
 
@@ -253,7 +253,7 @@ if __name__ == "__main__":
             #for stage in range(max_stages):
             for stage in range(1,4):
                 bartender.makeDrink(order, stage)
-                if not stage == 4:
+                if not stage == 4 or not stage == 3:
                     Arm.rotate()
                 print("stage " + str(stage))
             Arm.reset()
