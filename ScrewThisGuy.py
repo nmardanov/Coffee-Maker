@@ -253,7 +253,7 @@ if __name__ == "__main__":
             #for stage in range(max_stages):
             for stage in range(1,4):
                 bartender.makeDrink(order, stage)
-                if not stage == 4 or not stage == 3:
+                if not stage == 4 and not stage == 3:
                     Arm.rotate()
                 print("stage " + str(stage))
             Arm.reset()
