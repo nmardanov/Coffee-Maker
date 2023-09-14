@@ -45,7 +45,42 @@ class Bartender(MenuDelegate):
     @staticmethod
     def readPumpConfiguration():
         return json.load(open('/home/lamarcsnhscoffee/Desktop/Coffee-MakerV.2/Coffee-Maker/pump_config.json'))
-        
+
+    def newDay(self):
+        waitTime = 20
+        pumpThreads = []
+
+        # cancel any button presses while the drink is being made
+        # self.stopInterrupts()
+        self.running = True
+
+        for pump in self.pump_configuration.keys():
+            pump_t = threading.Thread(target=self.pour, args=(self.pump_configuration[pump]["pin"], waitTime))
+
+            if self.pump_configuration[pump]["pin"]==21 or self.pump_configuration[pump]["pin"]==23:
+                continue
+            pumpThreads.append(pump_t)
+
+        # start the pump threads
+        for thread in pumpThreads:
+            thread.start()
+
+        # start the progress bar
+        #self.progressBar(waitTime)
+
+        # wait for threads to finish
+        for thread in pumpThreads:
+            thread.join()
+
+        # show the main menu
+        #self.menuContext.showMenu()
+
+        # sleep for a couple seconds to make sure the interrupts don't get triggered
+        time.sleep(2)
+
+        # reenable interrupts
+        # self.startInterrupts()
+        self.running = False      
 
     def clean(self):
         waitTime = 60
@@ -97,6 +132,7 @@ class Bartender(MenuDelegate):
                 time.sleep(waitTime)
                 GPIO.output(pin, GPIO.HIGH)
             if pin == 23:
+                time.sleep(5)
                 Pully.down()
                 GPIO.output(pin, GPIO.LOW)
                 time.sleep(waitTime)
@@ -231,6 +267,7 @@ def orderThread():
 if __name__ == "__main__":
     bartender = Bartender()
     #bartender.clean()
+    bartender.newDay()
     d = []
     for drink in drink_list:
         d.append(drink['name'])  
@@ -254,7 +291,7 @@ if __name__ == "__main__":
             for stage in range(1,4):
                 bartender.makeDrink(order, stage)
                 if not stage == 4 and not stage == 3:
-                    Arm.rotate()
+                    Arm.rotate(stage)
                 print("stage " + str(stage))
             Arm.reset()
                 

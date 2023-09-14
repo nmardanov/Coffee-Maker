@@ -9,10 +9,11 @@ from gpiozero import Servo
 
 
 
-def rotate():
+def rotate(stage):
     pin = 20
     GPIO.setmode(GPIO.BCM)
     GPIO.setwarnings(False)
+
     GPIO.setup(pin,GPIO.OUT)
     GPIO.output(pin,GPIO.HIGH)
     time.sleep(.575)
