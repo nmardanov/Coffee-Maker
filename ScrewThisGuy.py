@@ -44,7 +44,7 @@ class Bartender(MenuDelegate):
 
     @staticmethod
     def readPumpConfiguration():
-        return json.load(open('/home/lamarcsnhscoffee/Desktop/Coffee-MakerV.2/Coffee-Maker/pump_config.json'))
+        return json.load(open('/home/lamarcsnhscoffee/Desktop/Coffee-MakerV.2/Coffee-Maker/pump_config.json')) # what value do we want the grinder to manage? (trent)
 
     def newDay(self):
         waitTime = 20

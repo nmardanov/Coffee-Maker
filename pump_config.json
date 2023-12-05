@@ -29,5 +29,17 @@
 		"pin": 23,
 		"value": "Froth",
 		"stage": 2
+	},
+	"Grinder_1": {
+		"name": "Grinder_1",
+		"pin": 6,
+		"value": "Light",
+		"stage": 3
+	},
+	"Grinder_2": {
+		"name": "Grinder_2",
+		"pin": 0,
+		"value": "Dark",
+		"stage": 3
 	}
 }
