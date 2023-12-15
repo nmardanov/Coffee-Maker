@@ -35,6 +35,6 @@ def Pump_Grounds():
     GPIO.setwarnings(False)
     GPIO.setup(pin,GPIO.OUT)
     GPIO.output(pin,GPIO.LOW)
-    time.sleep(4)
+    time.sleep(6)
     GPIO.output(pin,GPIO.HIGH)
     print("OFF")
