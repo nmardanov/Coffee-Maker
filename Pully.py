@@ -7,7 +7,26 @@ import traceback
 from gpiozero import Servo
 
 def down():
-    pass
+    pin = 24
+    GPIO.setmode(GPIO.BCM)
+    GPIO.setwarnings(False)
+
+    GPIO.setup(pin,GPIO.OUT)
+    GPIO.output(pin,GPIO.HIGH)
+    time.sleep(10)
+    GPIO.output(pin,GPIO.LOW)
+    print("up??")
 
 def up():
-    pass
+    pin = 25
+    
+    print("did it go down yet?")
+    
+    GPIO.setmode(GPIO.BCM)
+    GPIO.setwarnings(False)
+    GPIO.setup(pin,GPIO.OUT)
+    print("finished drink")
+    #time.sleep(60)
+    GPIO.output(pin,GPIO.HIGH)
+    time.sleep(10)
+    GPIO.output(pin,GPIO.LOW)

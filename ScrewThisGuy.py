@@ -177,6 +177,10 @@ class Bartender(MenuDelegate):
                         pumpThreads.append(pump_t)
                         print('We have made a thread')
 
+                    if stage == 2 and ing == "Froth":
+                        print("works")
+                        #add frother arm code here
+
         # start the pump threads
         for thread in pumpThreads:
             thread.start()
