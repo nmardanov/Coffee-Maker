@@ -31,11 +31,15 @@ class Bartender(MenuDelegate):
         self.running = False
         # load the pump configuration from file
         self.pump_configuration = Bartender.readPumpConfiguration()
-        GPIO.setup(6, GPIO.OUT, initial=GPIO.HIGH)
+        # GPIO.setup(6, GPIO.OUT, initial=GPIO.HIGH)
         for pump in self.pump_configuration.keys():
             #Finding the pin numbers per pump and seting up the GPIO
             if not self.pump_configuration[pump]['pin'] == 21:
                 GPIO.setup(self.pump_configuration[pump]["pin"], GPIO.OUT, initial=GPIO.HIGH)
+            elif not self.pump_configuration[pump]['pin'] == 6:
+                # GPIO.setup(self.pump_configuration[pump]["pin"], GPIO.OUT, initial=GPIO.LOW)
+                # time.sleep(2)
+                print("asdffdsfsdfsdafdsa")
             else:    
                 GPIO.setup(self.pump_configuration[pump]["pin"], GPIO.OUT, initial=GPIO.LOW)
             
@@ -267,7 +271,7 @@ def orderThread():
 if __name__ == "__main__":
     bartender = Bartender()
     #bartender.clean()
-    bartender.newDay()
+    # bartender.newDay()
     d = []
     for drink in drink_list:
         d.append(drink['name'])  
