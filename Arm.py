@@ -28,7 +28,7 @@ def reset():
     GPIO.setwarnings(False)
     GPIO.setup(pin,GPIO.OUT)
     print("finished drink")
-    #time.sleep(60)
+    time.sleep(60)
     GPIO.output(pin,GPIO.HIGH)
     time.sleep(.575*2)
     GPIO.output(pin,GPIO.LOW)

@@ -9,6 +9,7 @@ import OrderParser as o
 import grounds
 import Arm
 import Pully
+import FrothArm
 
 
 from menu import MenuItem, Menu, Back, MenuContext, MenuDelegate
@@ -173,12 +174,17 @@ class Bartender(MenuDelegate):
                     #Then it adds them to a list of not started threads 
                     #This is statement checks if the arm is in the correct place
                     if stage == self.pump_configuration[pump]["stage"]:
+                        if stage == 2 and ing == "Froth":
+                            print("going down")
+                            FrothArm.down()
                         pump_t = threading.Thread(target=self.pour, args=(self.pump_configuration[pump]["pin"], waitTime))
                         pumpThreads.append(pump_t)
                         print('We have made a thread')
+                        if stage == 2 and ing == "Froth":
+                                print("works2")
+                                FrothArm.up()
 
-                    if stage == 2 and ing == "Froth":
-                        print("works")
+                    
                         #add frother arm code here
 
         # start the pump threads
@@ -275,7 +281,7 @@ if __name__ == "__main__":
     bartender = Bartender()
     #bartender.clean()
     time.sleep(5)
-    bartender.newDay()
+    #bartender.newDay()
     d = []
     for drink in drink_list:
         d.append(drink['name'])  

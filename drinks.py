@@ -19,6 +19,12 @@ drink_list = [
     		"Coffee":250
 		}
 	}, {
+		"name": "clean",
+        "ingredients":{
+			"Milk": 80,
+            "Almond": 80
+		} 
+	}, {
 		"name": "al latte",
         "ingredients":{
 			"Coffee": 200,
@@ -26,6 +32,7 @@ drink_list = [
             "Almond": 60
 		} 
 	}
+    
 ]
 
 drink_options = [
