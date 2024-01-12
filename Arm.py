@@ -16,8 +16,12 @@ def rotate(stage):
 
     GPIO.setup(pin,GPIO.OUT)
     GPIO.output(pin,GPIO.HIGH)
-    time.sleep(.575)
+    time.sleep(.615)
     GPIO.output(pin,GPIO.LOW)
+    if(stage ==2):
+        GPIO.output(pin,GPIO.HIGH)
+        time.sleep(.275)
+        GPIO.output(pin,GPIO.LOW)
 
 def reset():
     time.sleep(60)
@@ -30,5 +34,5 @@ def reset():
     print("finished drink")
     time.sleep(60)
     GPIO.output(pin,GPIO.HIGH)
-    time.sleep(.575*2)
+    time.sleep(.675*2)
     GPIO.output(pin,GPIO.LOW)
