@@ -188,9 +188,14 @@ class Bartender(MenuDelegate):
                         #add frother arm code here
 
         # sets up grinder (will have to move this somewhere...)
-        for gr in grounds:
-            if gr["name"] == "Medium" or gr["name"] == "Dark":
-                this_grinder = gr["grinder"]
+        this_grinder = "Medium"
+        for tbl in drink_list:
+            if tbl["name"] == self.pump_configuration[pump]["value"]:
+                for gr in grounds:
+                    if gr["name"] == tbl["ground"]:
+                        this_grinder = gr["name"]
+        
+        print("This grinder:", this_grinder)
 
         # start the pump threads
         for thread in pumpThreads:
