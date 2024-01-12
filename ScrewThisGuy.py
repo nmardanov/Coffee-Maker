@@ -173,7 +173,21 @@ class Bartender(MenuDelegate):
                     #THE THREADS HAVENT STARTED YET
                     #Then it adds them to a list of not started threads 
                     #This is statement checks if the arm is in the correct place
+
+                    # sets up grinder (will have to move this somewhere...)
+
                     if stage == self.pump_configuration[pump]["stage"]:
+                        this_ground = "Medium"
+                        for tbl in drink_list:
+                                if tbl["name"] == self.pump_configuration[pump]["value"]:
+                                    for gr in grounds:
+                                        if gr["name"] == tbl["ground"]:
+                                            this_ground = gr["name"]
+                            
+                        print("This grinder:", this_ground)
+                        grounds.Pump_Grounds(this_ground)
+
+
   #                      if stage == 2 and ing == "Froth":
    #                         print("going down")
     #                        FrothArm.down()
@@ -186,16 +200,6 @@ class Bartender(MenuDelegate):
 
                     
                         #add frother arm code here
-
-        # sets up grinder (will have to move this somewhere...)
-        this_grinder = "Medium"
-        for tbl in drink_list:
-            if tbl["name"] == self.pump_configuration[pump]["value"]:
-                for gr in grounds:
-                    if gr["name"] == tbl["ground"]:
-                        this_grinder = gr["name"]
-        
-        print("This grinder:", this_grinder)
 
         # start the pump threads
         for thread in pumpThreads:
@@ -215,7 +219,7 @@ class Bartender(MenuDelegate):
 
 
         # sleep for a couple seconds to make sure the interrupts don't get triggered
-        time.sleep(2);
+        time.sleep(2)
 
         # reenable interrupts
         # self.startInterrupts()
@@ -310,11 +314,10 @@ if __name__ == "__main__":
             order = orders[0]
             orders.pop(0)
             order = bartender.ChooseDrink(order)
-            grounds.Pump_Grounds()
             #for stage in range(max_stages):
-            for stage in range(1,4):
+            for stage in range(0,4):
                 bartender.makeDrink(order, stage)
-                if not stage == 4 and not stage == 3:
+                if not stage == 4 and not stage == 3 and not stage==0:
                     Arm.rotate(stage)
                 print("stage " + str(stage))
             Arm.reset()
