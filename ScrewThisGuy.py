@@ -15,7 +15,7 @@ import Pully
 from menu import MenuItem, Menu, Back, MenuContext, MenuDelegate
 from drinks import drink_list, drink_options
 max_stages = 3
-
+groundsHasRun = False
 
 GPIO.setmode(GPIO.BCM)
 
@@ -176,7 +176,8 @@ class Bartender(MenuDelegate):
 
                     # sets up grinder (will have to move this somewhere...)
 
-                    if stage == self.pump_configuration[pump]["stage"]:
+                    if stage == self.pump_configuration[pump]["stage"] and groundsHasRun == False:
+                        groundsHasRun = True
                         this_ground = "Medium"
                         for tbl in drink_list:
                                 if tbl["name"] == self.pump_configuration[pump]["value"]:
@@ -185,6 +186,7 @@ class Bartender(MenuDelegate):
                                             this_ground = gr["name"]
                             
                         print("This grinder:", this_ground)
+
                         grounds.Pump_Grounds(this_ground)
 
 
@@ -310,7 +312,8 @@ if __name__ == "__main__":
     while True:
         print(orders)
         if len(orders) > 0:
-            stage = 1     
+            stage = 1  
+            groundHasRun = False   
             order = orders[0]
             orders.pop(0)
             order = bartender.ChooseDrink(order)
