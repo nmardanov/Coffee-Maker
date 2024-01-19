@@ -4,15 +4,9 @@ drink_list = [
         "ground": "Medium", # change this if needed
 		"ingredients": {
 			"Froth":80,
-<<<<<<< HEAD
 			"Coffee Pot":200,
 			"Milk": 60,
             "Coffee": 6
-=======
-			"Coffee":200,
-			"Milk": 60,
-            "Grounds": 6
->>>>>>> a438fa2e900b3b74504be1cac516354cdd7588bc
 		}
 	}, {
     	"name": "test",
@@ -26,13 +20,8 @@ drink_list = [
     	"name": "black",
 		"ground": "Medium", # change this if needed
         "ingredients":{
-<<<<<<< HEAD
     		"Coffee Pot":250,
             "Coffee": 6
-=======
-    		"Coffee":250,
-            "Grounds": 6
->>>>>>> a438fa2e900b3b74504be1cac516354cdd7588bc
 		}
 	}, {
 		"name": "clean",
