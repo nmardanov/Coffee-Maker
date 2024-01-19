@@ -33,7 +33,11 @@
 	"medium_roast": {
 		"name"  : "Medium",
 		"pin"   : 6,
+<<<<<<< HEAD
 		"value" : "Coffee",
+=======
+		"value" : "Medium",
+>>>>>>> a438fa2e900b3b74504be1cac516354cdd7588bc
 		"stage" : 0
 	},
 	"dark_roast": {
