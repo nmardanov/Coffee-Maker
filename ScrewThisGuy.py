@@ -16,7 +16,6 @@ from menu import MenuItem, Menu, Back, MenuContext, MenuDelegate
 from drinks import drink_list, drink_options
 max_stages = 3
 
-
 GPIO.setmode(GPIO.BCM)
 
 
@@ -24,10 +23,12 @@ GPIO.setmode(GPIO.BCM)
 FLOW_RATE = 60.0/100.0
 
 class Bartender(MenuDelegate): 
-	
+    
+
     def __init__(self):
         print("Initializing...")
-
+        #Pully.reset()
+        #Pully.up()
         self.possibleDrinks = drink_list
         self.running = False
         # load the pump configuration from file
@@ -126,6 +127,7 @@ class Bartender(MenuDelegate):
         print(menuItem.name)
 
     def pour(self, pin, waitTime):
+        print("pour pin", pin)
         if pin == 21:
             GPIO.output(pin, GPIO.HIGH)
             time.sleep(waitTime)
@@ -173,7 +175,11 @@ class Bartender(MenuDelegate):
                     #THE THREADS HAVENT STARTED YET
                     #Then it adds them to a list of not started threads 
                     #This is statement checks if the arm is in the correct place
+                    print("testing stage pin", self.pump_configuration[pump]["pin"])
+                    print('test stage', stage, ' ', self.pump_configuration[pump]["stage"])
+
                     if stage == self.pump_configuration[pump]["stage"]:
+                        print("testing pin", self.pump_configuration[pump]["pin"])
   #                      if stage == 2 and ing == "Froth":
    #                         print("going down")
     #                        FrothArm.down()
@@ -187,15 +193,7 @@ class Bartender(MenuDelegate):
                     
                         #add frother arm code here
 
-        # sets up grinder (will have to move this somewhere...)
-        this_grinder = "Medium"
-        for tbl in drink_list:
-            if tbl["name"] == self.pump_configuration[pump]["value"]:
-                for gr in grounds:
-                    if gr["name"] == tbl["ground"]:
-                        this_grinder = gr["name"]
-        
-        print("This grinder:", this_grinder)
+
 
         # start the pump threads
         for thread in pumpThreads:
@@ -215,7 +213,7 @@ class Bartender(MenuDelegate):
 
 
         # sleep for a couple seconds to make sure the interrupts don't get triggered
-        time.sleep(2);
+        time.sleep(2)
 
         # reenable interrupts
         # self.startInterrupts()
@@ -306,15 +304,15 @@ if __name__ == "__main__":
     while True:
         print(orders)
         if len(orders) > 0:
-            stage = 1     
+            stage = 1
             order = orders[0]
             orders.pop(0)
+            Bartender.order_name = order
             order = bartender.ChooseDrink(order)
-            grounds.Pump_Grounds()
             #for stage in range(max_stages):
-            for stage in range(1,4):
+            for stage in range(0,4):
                 bartender.makeDrink(order, stage)
-                if not stage == 4 and not stage == 3:
+                if not stage == 4 and not stage == 3 and not stage==0:
                     Arm.rotate(stage)
                 print("stage " + str(stage))
             Arm.reset()

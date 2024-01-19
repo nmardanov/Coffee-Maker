@@ -17,6 +17,7 @@ grounds_list = [
     {
 
         "name": "Medium",
+        "grinder": "Grinder_2"
 
     },
 
@@ -29,7 +30,8 @@ grounds_list = [
 
 ]
 
-def Pump_Grounds():
+def Pump_Grounds(ground):
+    print('testing', ground)
     pin = 6
     GPIO.setmode(GPIO.BCM)
     GPIO.setwarnings(False)

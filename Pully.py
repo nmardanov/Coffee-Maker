@@ -47,3 +47,13 @@ def up():
     time.sleep(10)
     GPIO.output(pin,GPIO.LOW)
 
+def reset():
+    pin = 25
+    GPIO.setmode(GPIO.BCM)
+    GPIO.setwarnings(False)
+    GPIO.setup(pin,GPIO.OUT)
+
+    #time.sleep(60)
+    GPIO.output(pin,GPIO.HIGH)
+    time.sleep(10)
+    GPIO.output(pin,GPIO.LOW)

@@ -21,7 +21,7 @@
 	"pump_4": {
 		"name": "Pump 4",
 		"pin": 21,
-		"value": "Coffee",
+		"value": "Coffee Pot",
 		"stage": 3
 	},
 	"Frother": {
@@ -29,6 +29,18 @@
 		"pin": 23,
 		"value": "Froth",
 		"stage": 2
+	},
+	"medium_roast": {
+		"name"  : "Medium",
+		"pin"   : 6,
+		"value" : "Coffee",
+		"stage" : 0
+	},
+	"dark_roast": {
+		"name"  : "Dark",
+		"pin"   : 6,
+		"value" : "Dark",
+		"stage" : 0
 	}
 
 }
