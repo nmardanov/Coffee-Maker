@@ -15,10 +15,6 @@ import Pully
 from menu import MenuItem, Menu, Back, MenuContext, MenuDelegate
 from drinks import drink_list, drink_options
 max_stages = 3
-<<<<<<< HEAD
-=======
-groundsHasRun = False
->>>>>>> a438fa2e900b3b74504be1cac516354cdd7588bc
 
 GPIO.setmode(GPIO.BCM)
 
@@ -179,31 +175,11 @@ class Bartender(MenuDelegate):
                     #THE THREADS HAVENT STARTED YET
                     #Then it adds them to a list of not started threads 
                     #This is statement checks if the arm is in the correct place
-<<<<<<< HEAD
                     print("testing stage pin", self.pump_configuration[pump]["pin"])
                     print('test stage', stage, ' ', self.pump_configuration[pump]["stage"])
 
                     if stage == self.pump_configuration[pump]["stage"]:
                         print("testing pin", self.pump_configuration[pump]["pin"])
-=======
-
-                    # sets up grinder (will have to move this somewhere...)
-
-                    if stage == self.pump_configuration[pump]["stage"] and groundsHasRun == False:
-                        groundsHasRun = True
-                        this_ground = "Medium"
-                        for tbl in drink_list:
-                                if tbl["name"] == self.pump_configuration[pump]["value"]:
-                                    for gr in grounds:
-                                        if gr["name"] == tbl["ground"]:
-                                            this_ground = gr["name"]
-                            
-                        print("This grinder:", this_ground)
-
-                        grounds.Pump_Grounds(this_ground)
-
-
->>>>>>> a438fa2e900b3b74504be1cac516354cdd7588bc
   #                      if stage == 2 and ing == "Froth":
    #                         print("going down")
     #                        FrothArm.down()
@@ -217,11 +193,8 @@ class Bartender(MenuDelegate):
                     
                         #add frother arm code here
 
-<<<<<<< HEAD
 
 
-=======
->>>>>>> a438fa2e900b3b74504be1cac516354cdd7588bc
         # start the pump threads
         for thread in pumpThreads:
             thread.start()
@@ -331,12 +304,7 @@ if __name__ == "__main__":
     while True:
         print(orders)
         if len(orders) > 0:
-<<<<<<< HEAD
             stage = 1
-=======
-            stage = 1  
-            groundHasRun = False   
->>>>>>> a438fa2e900b3b74504be1cac516354cdd7588bc
             order = orders[0]
             orders.pop(0)
             Bartender.order_name = order
