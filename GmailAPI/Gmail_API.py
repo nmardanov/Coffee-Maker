@@ -1,6 +1,11 @@
 #AIzaSyCrCyfLHsXhD_AgbDyE66re2LI9ylX3OKk
 
 import imaplib
+
+import smtplib
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+
 import email
 from email.header import decode_header
 from itertools import chain
@@ -29,24 +34,9 @@ twilio_phone_number= os.environ.get("TWILIO_PHONE_NUMBER")
 
 
 # account credentials
-username = os.environ.get("username")
-password = os.environ.get("password")
+username = os.environ.get("guser")
+password = os.environ.get("gpass")
 
-
-# use your email provider's IMAP server, you can look for your provider's IMAP server on Google
-# or check this page: https://www.systoolsgroup.com/imap/
-# for office 365, it's this:
-imap_server = "outlook.office365.com"
-
-# create an IMAP4 class with SSL
-imap = imaplib.IMAP4_SSL(imap_server)
-# authenticate
-imap.login(username, password)
-
-status, messages = imap.select("INBOX")
-# total number of emails
-messages = int(messages[0])
-rem = messages
 
 def save_attachment(part):
     filename = part.get_filename()
@@ -90,70 +80,67 @@ def send_sms_twilio(to, body):
     )
     print("Message sent to", to)
 
+def send_email_gmail(to, subject, body):
+    # Create an SMTP connection to Gmail's server
+    smtp_server = "smtp.gmail.com"
+    smtp_port = 587  # Use TLS port
+    smtp_username = username
+    smtp_password = password
 
-def SendEmail(to, cc_mail, body, attachmentspath=None):
-    # Check if the email address is for a T-Mobile or Verizon number
-    if "@tmomail.net" in to or "@vtext.com" in to:
-        # Extract the phone number from the email address
-        phone_number = re.sub(r"@.*", "", to)
-        # Send the SMS using Twilio
-        send_sms_twilio(phone_number, body)
-        print("sent during twilio")
-    else:
-        creds = Credentials(
-            # login information for where the email is being sent from
-            username="lhsrobobarista@outlook.com",
-            password="Coffee1!"
-        )
-        account = Account(
-            primary_smtp_address=username,
-            credentials=creds,
-            autodiscover=True,
-            access_type=DELEGATE
-        )
+    try:
+        smtp_server = smtplib.SMTP(smtp_server, smtp_port)
+        smtp_server.starttls()
+        smtp_server.login(smtp_username, smtp_password)
 
-        m = Message(
-            account=account,
-            cc_recipients=cc_mail,
-            subject=None,
-            body=HTMLBody(body),
-            to_recipients=[Mailbox(email_address=to)]
-        )
-        print(body)
-        m.send()
+        # Create an email message
+        msg = MIMEMultipart()
+        msg['From'] = smtp_username
+        msg['To'] = to
+        msg['Subject'] = subject
 
+        # Attach the body
+        msg.attach(MIMEText(body, 'plain'))
 
+        # Send the email
+        smtp_server.sendmail(smtp_username, to, msg.as_string())
+
+        # Close the SMTP connection
+        smtp_server.quit()
+
+        print(f"Email sent to {to}")
+    except Exception as e:
+        print(f"Error sending email: {str(e)}")
+
+# Modify the checkMail function as needed for Gmail, but keep the IMAP connection logic.
 
 #Main loop
 def checkMail():
+    imap_server = "imap.gmail.com"
+
     imap = imaplib.IMAP4_SSL(imap_server)
     imap.login(username, password)
     status, messages = imap.select("INBOX")
     messages = int(messages[0])
     rem = messages
-#Have to login each loop to refresh the inbox. Redefine messages to see if any new ones are available.
-    while 1:
+
+    while True:
         imap = imaplib.IMAP4_SSL(imap_server)
         imap.login(username, password)
         status, messages = imap.select("INBOX")
         messages = int(messages[0])
-        #If there are new messages, read the contents of the newest message
+
         if messages != rem:
             res, msg = imap.fetch(str(messages), "(RFC822)") 
             for response in msg:
                 if isinstance(response, tuple):
-                    # parse a bytes email into a message object
                     msg = email.message_from_bytes(response[1])
-                    # decode the email subject
                     print(msg['From'])
-                    
-                    return(get_contents(msg), msg['From'])
+                    return get_contents(msg), msg['From']
             rem = messages
 
         print("Looped")
         time.sleep(5)
 
-
-# close the connection and logout
-imap.close()
-imap.logout()
+    # Close the connection and logout (you can move this to outside the loop)
+    imap.close()
+    imap.logout()

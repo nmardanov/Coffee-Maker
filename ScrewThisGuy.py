@@ -175,11 +175,11 @@ class Bartender(MenuDelegate):
                     #THE THREADS HAVENT STARTED YET
                     #Then it adds them to a list of not started threads 
                     #This is statement checks if the arm is in the correct place
-                    print("testing stage pin", self.pump_configuration[pump]["pin"])
-                    print('test stage', stage, ' ', self.pump_configuration[pump]["stage"])
+                    #print("testing stage pin", self.pump_configuration[pump]["pin"])
+                    #print('test stage', stage, ' ', self.pump_configuration[pump]["stage"])
 
                     if stage == self.pump_configuration[pump]["stage"]:
-                        print("testing pin", self.pump_configuration[pump]["pin"])
+                     #   print("testing pin", self.pump_configuration[pump]["pin"])
   #                      if stage == 2 and ing == "Froth":
    #                         print("going down")
     #                        FrothArm.down()

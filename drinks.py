@@ -13,8 +13,7 @@ drink_list = [
 		"ground": "Medium", # change this if needed
 		"ingredients":{
 			"Coffee": 5,
-            "Froth": 5,
-            "Grounds": 6
+            "Froth": 5
 		}
 	}, {
     	"name": "black",
@@ -28,8 +27,7 @@ drink_list = [
         "ground": "Medium", # change this if needed
         "ingredients":{
 			"Milk": 80,
-            "Almond": 80,
-			"Grounds": 6
+            "Almond": 80
 		} 
 	}, {
 		"name": "al latte",
@@ -38,7 +36,7 @@ drink_list = [
 			"Coffee Pot": 200,
             "Froth":80,
             "Almond": 60,
-            "Grounds": 6
+            "Coffee": 6
 		} 
 	}
     
