@@ -28,7 +28,7 @@ def up():
     print("checking dorian's code")
     #time.sleep(60)
     GPIO.output(pin,GPIO.HIGH)
-    time.sleep(1.6)
+    time.sleep(1.9)
     GPIO.output(pin,GPIO.LOW)
     pin = 23
     GPIO.setmode(GPIO.BCM)

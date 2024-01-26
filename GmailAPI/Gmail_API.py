@@ -92,17 +92,14 @@ def send_email_gmail(to, subject, body):
         smtp_server.starttls()
         smtp_server.login(smtp_username, smtp_password)
 
-        # Create an email message
-        msg = MIMEMultipart()
-        msg['From'] = smtp_username
-        msg['To'] = to
-        msg['Subject'] = subject
+
 
         # Attach the body
-        msg.attach(MIMEText(body, 'plain'))
+        message = ("From: %s\r\n" % smtp_username + "To: %s\r\n" % to + "Subject: %s\r\n" % '' + "\r\n" + body)
+
 
         # Send the email
-        smtp_server.sendmail(smtp_username, to, msg.as_string())
+        smtp_server.sendmail(smtp_username, to, message)
 
         # Close the SMTP connection
         smtp_server.quit()
@@ -124,8 +121,8 @@ def checkMail():
     rem = messages
 
     while True:
-        imap = imaplib.IMAP4_SSL(imap_server)
-        imap.login(username, password)
+        #imap = imaplib.IMAP4_SSL(imap_server)
+        #imap.login(username, password)
         status, messages = imap.select("INBOX")
         messages = int(messages[0])
 

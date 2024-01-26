@@ -260,7 +260,7 @@ def CheckForOrder():
             temp.append(drink['name'])  
         d += ', '.join(temp)
         print(d)
-        g.SendEmail(thing[1], None, d)
+        g.send_email_gmail(thing[1], None, d)
         print(thing[1])
         return CheckForOrder()
 

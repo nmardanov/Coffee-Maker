@@ -32,7 +32,7 @@ grounds_list = [
 
 def Pump_Grounds(ground):
     print('testing', ground)
-    pin = 6
+    pin = 7
     GPIO.setmode(GPIO.BCM)
     GPIO.setwarnings(False)
     GPIO.setup(pin,GPIO.OUT)
@@ -40,3 +40,4 @@ def Pump_Grounds(ground):
     time.sleep(6)
     GPIO.output(pin,GPIO.HIGH)
     print("OFF")
+
